@@ -1,97 +1,99 @@
 {
-	"name": "Slack Notifications",
-	"version": "1.15",
-	"author": "Aleksi Postari",
-	"url": "https://github.com/kulttuuri/slack_mediawiki",
-	"description": "Sends Slack notifications for selected actions that have occurred in your MediaWiki sites.",
+	"name": "Teams Notifications",
+	"version": "2.14",
+	"author": "Nicholas Avenell (based on Slack Notifications by Aleksi Postari)",
+	"url": "https://github.com/kulttuuri/Teams_mediawiki",
+	"description": "Sends Teams notifications for selected actions that have occurred in your MediaWiki sites.",
 	"type": "other",
+    "load_composer_autoloader":true,
 	"AutoloadClasses": {
-		"SlackNotifications": "SlackNotificationsCore.php"
+		"TeamsNotifications": "TeamsNotificationsCore.php",
+		"WikiUpdateCard": "WikiUpdateCard.php"
 	},
 	"Hooks": {
 		"PageContentSaveComplete": [
 			[
-				"SlackNotifications::slack_article_saved"
+				"TeamsNotifications::Teams_article_saved"
 			]
 		],
 		"PageContentInsertComplete": [
 			[
-				"SlackNotifications::slack_article_inserted"
+				"TeamsNotifications::Teams_article_inserted"
 			]
 		],
 		"ArticleDeleteComplete": [
 			[
-				"SlackNotifications::slack_article_deleted"
+				"TeamsNotifications::Teams_article_deleted"
 			]
 		],
 		"TitleMoveComplete": [
 			[
-				"SlackNotifications::slack_article_moved"
+				"TeamsNotifications::Teams_article_moved"
 			]
 		],
 		"AddNewAccount": [
 			[
-				"SlackNotifications::slack_new_user_account"
+				"TeamsNotifications::Teams_new_user_account"
 			]
 		],
 		"BlockIpComplete": [
 			[
-				"SlackNotifications::slack_user_blocked"
+				"TeamsNotifications::Teams_user_blocked"
 			]
 		],
 		"UploadComplete": [
 			[
-				"SlackNotifications::slack_file_uploaded"
+				"TeamsNotifications::Teams_file_uploaded"
 			]
 		],
 		"ArticleProtectComplete": [
 			[
-				"SlackNotifications::slack_article_protected"
+				"TeamsNotifications::Teams_article_protected"
 			]
 		],
 		"UserGroupsChanged": [
 			[
-				"SlackNotifications::slack_user_groups_changed"
+				"TeamsNotifications::Teams_user_groups_changed"
 			]
 		]
 	},
 	"config": {
-		"SlackIncomingWebhookUrl": "",
-		"SlackFromName": "",
-		"SlackRoomName": "",
-		"SlackSendMethod": "curl",
-		"SlackEmoji": "",
-		"SlackIncludePageUrls": true,
-		"SlackIncludeUserUrls": true,
-		"SlackIgnoreMinorEdits": false,
-		"SlackExcludedPermission": "",
-		"SlackExcludeNotificationsFrom": [],
-		"SlackIncludeNotificationsFrom": [],
-		"SlackNotificationWikiUrl": "",
-		"SlackNotificationWikiUrlEnding": "index.php?title=",
-		"SlackNotificationWikiUrlEndingUserRights": "Special%3AUserRights&user=",
-		"SlackNotificationWikiUrlEndingBlockUser": "Special:Block/",
-		"SlackNotificationWikiUrlEndingUserPage": "User:",
-		"SlackNotificationWikiUrlEndingUserTalkPage": "User_talk:",
-		"SlackNotificationWikiUrlEndingUserContributions": "Special:Contributions/",
-		"SlackNotificationWikiUrlEndingBlockList": "Special:BlockList",
-		"SlackNotificationWikiUrlEndingEditArticle": "action=edit",
-		"SlackNotificationWikiUrlEndingDeleteArticle": "action=delete",
-		"SlackNotificationWikiUrlEndingHistory": "action=history",
-		"SlackNotificationWikiUrlEndingDiff": "diff=prev&oldid=",
-		"SlackNotificationNewUser": true,
-		"SlackNotificationBlockedUser": true,
-		"SlackNotificationAddedArticle": true,
-		"SlackNotificationRemovedArticle": true,
-		"SlackNotificationMovedArticle": true,
-		"SlackNotificationEditedArticle": true,
-		"SlackNotificationFileUpload": true,
-		"SlackNotificationUserGroupsChanged": true,
-		"SlackNotificationProtectedArticle": true,
-		"SlackIncludeDiffSize": true,
-		"SlackShowNewUserEmail": true,
-		"SlackShowNewUserFullName": true,
-		"SlackShowNewUserIP": true
+		"TeamsIncomingWebhookUrl": "",
+		"TeamsFromName": "",
+		"TeamsRoomName": "",
+		"TeamsSendMethod": "curl",
+		"TeamsEmoji": "",
+		"TeamsIncludePageUrls": true,
+		"TeamsIncludeUserUrls": true,
+		"TeamsIgnoreMinorEdits": false,
+		"TeamsExcludedPermission": "",
+		"TeamsExcludeNotificationsFrom": [],
+		"TeamsIncludeNotificationsFrom": [],
+		"TeamsWikiUrl": "",
+		"TeamsWikiUrlEnding": "index.php?title=",
+		"TeamsWikiUrlEndingUserRights": "Special%3AUserRights&user=",
+		"TeamsWikiUrlEndingBlockUser": "Special:Block/",
+		"TeamsWikiUrlEndingUserPage": "User:",
+		"TeamsWikiUrlEndingUserTalkPage": "User_talk:",
+		"TeamsWikiUrlEndingUserContributions": "Special:Contributions/",
+		"TeamsWikiUrlEndingBlockList": "Special:BlockList",
+		"TeamsWikiUrlEndingEditArticle": "action=edit",
+		"TeamsWikiUrlEndingDeleteArticle": "action=delete",
+		"TeamsWikiUrlEndingHistory": "action=history",
+		"TeamsWikiUrlEndingDiff": "diff=prev&oldid=",
+		"TeamsNotificationNewUser": true,
+		"TeamsNotificationBlockedUser": true,
+		"TeamsNotificationAddedArticle": true,
+		"TeamsNotificationRemovedArticle": true,
+		"TeamsNotificationMovedArticle": true,
+		"TeamsNotificationEditedArticle": true,
+		"TeamsNotificationFileUpload": true,
+		"TeamsNotificationUserGroupsChanged": true,
+		"TeamsNotificationProtectedArticle": true,
+		"TeamsIncludeDiffSize": true,
+		"TeamsShowNewUserEmail": true,
+		"TeamsShowNewUserFullName": true,
+		"TeamsShowNewUserIP": true
 	},
 	"manifest_version": 1
 }

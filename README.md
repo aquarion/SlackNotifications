@@ -1,10 +1,17 @@
-# Slack MediaWiki
+# Teams MediaWiki
 
-This is a extension for [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) that sends notifications of actions in your Wiki like editing, adding or removing a page into [Slack](https://slack.com/) channel.
+This is a extension for [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) that sends notifications of actions in your Wiki like editing, adding or removing a page into Microsoft Teams channel.
+
+This is an incredibly hacked version of Aleksi Postari's [Slack Notifications](https://github.com/kulttuuri/SlackNotifications) project, combined with [Sebastian Meyer](https://github.com/sebbmeyer)'s [PHP Microsoft Teams Webhook](https://github.com/sebbmeyer/php-microsoft-teams-connector) library. Neither of which deserve the shear mess that is this project.
+
+The rest of this document is from Aleksi's Readme, but with Slack replaced with Teams where I've renamed the variables. Some of these don't work, even, because... just because, at this point. It's been a long day.
+
+If you find this useful and end up cleaning it up, Pull Requests are welcome, and I'm deeply sorry.
+
+# Bastardized Slack Mediawiki Readme Follows:
 
 > Looking for extension that can send notifications to [HipChat](https://github.com/kulttuuri/hipchat_mediawiki) or [Discord](https://github.com/kulttuuri/discord_mediawiki)?
 
-![Screenshot](http://i.imgur.com/4SG64a3.jpg)
 
 ## Supported MediaWiki operations to send notifications
 
@@ -16,11 +23,6 @@ This is a extension for [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) th
 * File is uploaded.
 * ... and each notification can be individually enabled or disabled :)
 
-## Upgrading extension
-
-Upgrading from older version to 1.15 of this extension has one change that you need to take into account:
-- All configuration parameters now use the format `wgSlack`. If you had configured any of the `wgNotificationWikiUrlEnding` parameters, you need to change these to format: `wgSlackNotificationWikiUrlEnding`.
-
 ## Requirements
 
 * [cURL](http://curl.haxx.se/). This extension also supports using `file_get_contents` for sending the data. See the configuration parameter `$wgSlackSendMethod` below to change this.
@@ -29,29 +31,29 @@ Upgrading from older version to 1.15 of this extension has one change that you n
 
 ## How to install
 
-1) Create a new Slack Incoming Webhook. When setting up the webhook, define channel where you want the notifications to go into. You can setup a new webhook on [this page](https://slack.com/services/new/incoming-webhook).
+1) Create a new Teams Incoming Webhook. When setting up the webhook, define channel where you want the notifications to go into. You can setup a new webhook on [this page](https://slack.com/services/new/incoming-webhook).
 
 2) After setting up the Webhook you will get a Webhook URL. Copy that URL as you will need it in step 4.
 
-3) [Download latest release of this extension](https://github.com/kulttuuri/slack_mediawiki/archive/master.zip), uncompress the archive and move folder `SlackNotifications` into your `mediawiki_installation/extensions` folder.
+3) [Download latest release of this extension](https://github.com/kulttuuri/slack_mediawiki/archive/master.zip), uncompress the archive and move folder `TeamsNotifications` into your `mediawiki_installation/extensions` folder.
 
 4) Add settings listed below in your `localSettings.php`. Note that it is mandatory to set these settings for this extension to work:
 
 ```php
-require_once("$IP/extensions/SlackNotifications/SlackNotifications.php");
-// Required. Your Slack incoming webhook URL. Read more from here: https://api.slack.com/incoming-webhooks
-$wgSlackIncomingWebhookUrl = "";
+require_once("$IP/extensions/TeamsNotifications/TeamsNotifications.php");
+// Required. Your Teams incoming webhook URL. Read more from here: https://api.slack.com/incoming-webhooks
+$wgTeamsIncomingWebhookUrl = "";
 // Required. Name the message will appear to be sent from. Change this to whatever you wish it to be.
-$wgSlackFromName = $wgSitename;
+$wgTeamsFromName = $wgSitename;
 // URL into your MediaWiki installation with the trailing /.
-$wgSlackNotificationWikiUrl		= "http://your_wiki_url/";
+$wgWikiUrl		= "http://your_wiki_url/";
 // Wiki script name. Leave this to default one if you do not have URL rewriting enabled.
-$wgSlackNotificationWikiUrlEnding = "index.php?title=";
-// What method will be used to send the data to Slack server. By default this is "curl" which only works if you have the curl extension enabled. This can be: "curl" or "file_get_contents". There have been cases where VisualEditor extension does not work with the curl method, so in that case the recommended solution is to use the file_get_contents method. Default: "curl".
-$wgSlackSendMethod = "curl";
+$wgWikiUrlEnding = "index.php?title=";
+// What method will be used to send the data to Teams server. By default this is "curl" which only works if you have the curl extension enabled. This can be: "curl" or "file_get_contents". There have been cases where VisualEditor extension does not work with the curl method, so in that case the recommended solution is to use the file_get_contents method. Default: "curl".
+$wgTeamsSendMethod = "curl";
 ```
 
-5) Enjoy the notifications in your Slack room!
+5) Enjoy the notifications in your Teams room!
 	
 ## Additional options
 
@@ -62,15 +64,15 @@ These options can be set after including your plugin in your localSettings.php f
 By default this extension uses curl to send the requests to slack's API. If you use VisualEditor and get unknown errors, do not have curl enabled on your server or notice other problems, the recommended solution is to change method to file_get_contents.
 
 ```php
-$wgSlackSendMethod = "file_get_contents";
+$wgTeamsSendMethod = "file_get_contents";
 ```
 
 ### Customize room where notifications gets sent to
 
-By default when you create incoming webhook at Slack site you'll define which room notifications go into. You can also override this in MediaWiki by setting the parameter below. Remember to also include # before your room name.
+By default when you create incoming webhook at Teams site you'll define which room notifications go into. You can also override this in MediaWiki by setting the parameter below. Remember to also include # before your room name.
 
 ```php
-$wgSlackRoomName = "";
+$wgTeamsRoomName = "";
 ```
 
 ### Remove additional links from user and article pages
@@ -79,19 +81,19 @@ By default user and article links in the nofication message will get additional 
 
 ```php
 // If this is true, pages will get additional links in the notification message (edit | delete | history).
-$wgSlackIncludePageUrls = true;
+$wgTeamsIncludePageUrls = true;
 // If this is true, users will get additional links in the notification message (block | groups | talk | contribs).
-$wgSlackIncludeUserUrls = true;
-// If this is true, all minor edits made to articles will not be submitted to Slack.
-$wgSlackIgnoreMinorEdits = false;
+$wgTeamsIncludeUserUrls = true;
+// If this is true, all minor edits made to articles will not be submitted to Teams.
+$wgTeamsIgnoreMinorEdits = false;
 ```
 
 ### Set emoji for notification
 
-By default notification in Slack has the default emoji for notification. You can customize this with the setting below. You can find all available emojis from [here](http://www.webpagefx.com/tools/emoji-cheat-sheet/).
+By default notification in Teams has the default emoji for notification. You can customize this with the setting below. You can find all available emojis from [here](http://www.webpagefx.com/tools/emoji-cheat-sheet/).
 
 ```php
-$wgSlackEmoji = "";
+$wgTeamsEmoji = "";
 ```
 
 ### Show edit size
@@ -99,29 +101,29 @@ $wgSlackEmoji = "";
 By default we show size of the edit. You can hide this information with the setting below.
 
 ```php
-$wgSlackIncludeDiffSize = false;
+$wgTeamsIncludeDiffSize = false;
 ```
 
 ### Disable new user extra information
 
-By default we show full name, email and IP address of newly created user in the notification. You can individually disable each of these using the settings below. This is helpful for example in situation where you do not want to expose this information for users in your Slack channel.
+By default we show full name, email and IP address of newly created user in the notification. You can individually disable each of these using the settings below. This is helpful for example in situation where you do not want to expose this information for users in your Teams channel.
 
 ```php
 // If this is true, newly created user email address is added to notification.
-$wgSlackShowNewUserEmail = true;
+$wgTeamsShowNewUserEmail = true;
 // If this is true, newly created user full name is added to notification.
-$wgSlackShowNewUserFullName = true;
+$wgTeamsShowNewUserFullName = true;
 // If this is true, newly created user IP address is added to notification.
-$wgSlackShowNewUserIP = true;
+$wgTeamsShowNewUserIP = true;
 ```
 
 ### Disable notifications from certain user roles
 
-By default notifications from all users will be sent to your Slack room. If you wish to exclude users in certain group to not send notification of any actions, you can set the group with the setting below.
+By default notifications from all users will be sent to your Teams room. If you wish to exclude users in certain group to not send notification of any actions, you can set the group with the setting below.
 
 ```php
 // If this is set, actions by users with this permission won't cause alerts
-$wgSlackExcludedPermission = "";
+$wgExcludedPermission = "";
 ```
 
 ### Disable notifications from certain pages / namespaces
@@ -129,8 +131,8 @@ $wgSlackExcludedPermission = "";
 You can exclude notifications from certain namespaces / articles by adding them into this array. Note: This targets all pages starting with the name.
 
 ```php
-// Actions (add, edit, modify) won't be notified to Slack room from articles starting with these names
-$wgSlackExcludeNotificationsFrom = ["User:", "Weirdgroup"];
+// Actions (add, edit, modify) won't be notified to Teams room from articles starting with these names
+$wgTeamsExcludeNotificationsFrom = ["User:", "Weirdgroup"];
 ```
 
 ### Enable notifications from certain pages / namespaces
@@ -138,33 +140,33 @@ $wgSlackExcludeNotificationsFrom = ["User:", "Weirdgroup"];
 You can whitelist notifications from certain namespaces / articles by adding them into this array. Note: This targets all pages starting with the name. ALL Other notifications will be discarded, When active, the previously listed exclusion array will further limit this whitelist.
 
 ```php
-// Actions (add, edit, modify) will be notified to Slack room from articles starting with these names
-$wgSlackIncludeNotificationsFrom = ["IT:", "Specialgroup"];
+// Actions (add, edit, modify) will be notified to Teams room from articles starting with these names
+$wgTeamsIncludeNotificationsFrom = ["IT:", "Specialgroup"];
 ```
 
 ### Actions to notify of
 
-MediaWiki actions that will be sent notifications of into Slack. Set desired options to false to disable notifications of those actions.
+MediaWiki actions that will be sent notifications of into Teams. Set desired options to false to disable notifications of those actions.
 
 ```php
 // New user added into MediaWiki
-$wgSlackNotificationNewUser = true;
+$wgTeamsNotificationNewUser = true;
 // User or IP blocked in MediaWiki
-$wgSlackNotificationBlockedUser = true;
+$wgTeamsNotificationBlockedUser = true;
 // User groups changed in MediaWiki
-$wgSlackNotificationUserGroupsChanged = true;
+$wgTeamsNotificationUserGroupsChanged = true;
 // Article added to MediaWiki
-$wgSlackNotificationAddedArticle = true;
+$wgTeamsNotificationAddedArticle = true;
 // Article removed from MediaWiki
-$wgSlackNotificationRemovedArticle = true;
+$wgTeamsNotificationRemovedArticle = true;
 // Article moved under new title in MediaWiki
-$wgSlackNotificationMovedArticle = true;
+$wgTeamsNotificationMovedArticle = true;
 // Article edited in MediaWiki
-$wgSlackNotificationEditedArticle = true;
+$wgTeamsNotificationEditedArticle = true;
 // File uploaded
-$wgSlackNotificationFileUpload = true;
+$wgTeamsNotificationFileUpload = true;
 // Article protection settings changed
-$wgSlackNotificationProtectedArticle = true;
+$wgTeamsNotificationProtectedArticle = true;
 ```
 	
 ## Additional MediaWiki URL Settings
@@ -172,16 +174,16 @@ $wgSlackNotificationProtectedArticle = true;
 Should any of these default MediaWiki system page URLs differ in your installation, change them here.
 
 ```php
-$wgSlackNotificationWikiUrlEndingUserRights          = "Special%3AUserRights&user=";
-$wgSlackNotificationWikiUrlEndingBlockUser           = "Special:Block/";
-$wgSlackNotificationWikiUrlEndingUserPage            = "User:";
-$wgSlackNotificationWikiUrlEndingUserTalkPage        = "User_talk:";
-$wgSlackNotificationWikiUrlEndingUserContributions   = "Special:Contributions/";
-$wgSlackNotificationWikiUrlEndingBlockList           = "Special:BlockList";
-$wgSlackNotificationWikiUrlEndingEditArticle         = "action=edit";
-$wgSlackNotificationWikiUrlEndingDeleteArticle       = "action=delete";
-$wgSlackNotificationWikiUrlEndingHistory             = "action=history";
-$wgSlackNotificationWikiUrlEndingDiff                = "diff=prev&oldid=";
+$wgWikiUrlEndingUserRights          = "Special%3AUserRights&user=";
+$wgWikiUrlEndingBlockUser           = "Special:Block/";
+$wgWikiUrlEndingUserPage            = "User:";
+$wgWikiUrlEndingUserTalkPage        = "User_talk:";
+$wgWikiUrlEndingUserContributions   = "Special:Contributions/";
+$wgWikiUrlEndingBlockList           = "Special:BlockList";
+$wgWikiUrlEndingEditArticle         = "action=edit";
+$wgWikiUrlEndingDeleteArticle       = "action=delete";
+$wgWikiUrlEndingHistory             = "action=history";
+$wgWikiUrlEndingDiff                = "diff=prev&oldid=";
 ```
 
 ## Setting proxy

@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "86af662e6f503cf4068990fc51f4812c",
+    "content-hash": "c5f52218dbdcf2106bbaf4a79410a13c",
+    "packages": [
+        {
+            "name": "sebbmeyer/php-microsoft-teams-connector",
+            "version": "0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebbmeyer/php-microsoft-teams-connector.git",
+                "reference": "90cacd627c209480d72ccebebfe53da5a337bc53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebbmeyer/php-microsoft-teams-connector/zipball/90cacd627c209480d72ccebebfe53da5a337bc53",
+                "reference": "90cacd627c209480d72ccebebfe53da5a337bc53",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sebbmyr\\Teams\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Meyer",
+                    "email": "sebbmyr@gmail.com"
+                }
+            ],
+            "description": "PHP Microsoft Teams Connector",
+            "keywords": [
+                "Teams",
+                "connector",
+                "connectors",
+                "messagecard",
+                "microsoft",
+                "php"
+            ],
+            "time": "2020-02-12 21:03:40"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
